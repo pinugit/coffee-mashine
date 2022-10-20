@@ -1,5 +1,19 @@
-from multiprocessing.connection import wait
-
+def coinWnder(quarters, dimes, nickles, pennies, cost):
+    #This function will handle all the coin transition
+    totalQuarters = quarters * 0.25
+    totalDimes = dimes * 0.10
+    totalNickles = nickles * 0.05
+    totalPennies = pennies * 0.01
+    netTotal = totalDimes + totalNickles + totalQuarters +totalPennies
+    change = 0
+    canGetCoffee = True
+    if netTotal < cost:
+        canGetCoffee = False
+        return canGetCoffee, change
+    else :
+        change = netTotal - cost
+        return canGetCoffee, change
+    
 
 menu = {
     "espresso" :{
@@ -62,61 +76,98 @@ mashineRunning = True
 
 while mashineRunning :
     
-    userChoice = str(input("What would you like? (espresso(E)/latee(L)/cappuccino(C)): ")).upper()
+    userChoice = str(input("What would you like? (espresso(E)($1.5)/latee(L)($2.5)/cappuccino(C)($3.0)): ")).upper()
+    
     
     if userChoice == "ESPRESSO" or userChoice == "E":
+        userQuarters = int(input("Enter the number of quarters : "))
+        userDimes = int(input("Enter the number of dimes : "))
+        userNickles = int(input("Enter the number of nickles : "))
+        userPennies = int(input("Enter the number of pennies : "))
         
-        if espressoWater > water :
-            print("Not enough Water, please contact a staff member so they can fill this upp.")
+        canGetCoffee, change = coinWnder(userQuarters, userDimes, userNickles, userPennies, espressoCost)
         
-        elif espressomilk > milk:
-            print("Not enough Milk, please contact a staff member so they can fill this upp.")
+        if canGetCoffee:
+            
+            print("Here is your change $" + str(change) )
+            if espressoWater > water :
+                print("Not enough Water, please contact a staff member so they can fill this upp.")
+            
+            elif espressomilk > milk:
+                print("Not enough Milk, please contact a staff member so they can fill this upp.")
+        
+            elif espressoCoffee > coffee:
+                print("Not enough Coffee, please contact a staff member so they can fill this upp.")
     
-        elif espressoCoffee > coffee:
-            print("Not enough Coffee, please contact a staff member so they can fill this upp.")
-
-        else:
-            water -= espressoWater
-            milk -= espressomilk
-            coffee -= espressoCoffee
-            print("Enjoy your espresso")
-            print(water,milk,coffee)
+            else:
+                water -= espressoWater
+                milk -= espressomilk
+                coffee -= espressoCoffee
+                print("Enjoy your espresso")
+                
+        else :
+            print("Please insert inough coins")
             
     elif userChoice == "LATEE" or userChoice == "L":
         
-        if lateeWater > water :
-            print("Not enough Water, please contact a staff member so they can fill this upp.")
+        userQuarters = int(input("Enter the number of quarters : "))
+        userDimes = int(input("Enter the number of dimes : "))
+        userNickles = int(input("Enter the number of nickles : "))
+        userPennies = int(input("Enter the number of pennies : "))
         
-        elif lateemilk > milk:
-            print("Not enough Milk, please contact a staff member so they can fill this upp.")
-    
-        elif lateeCoffee > coffee:
-            print("Not enough Coffee, please contact a staff member so they can fill this upp.")
+        canGetCoffee, change = coinWnder(userQuarters, userDimes, userNickles, userPennies, lateeCost)
+        
+        if canGetCoffee:
+            
+            print("Here is your change $" + str(change) )
+        
+            if lateeWater > water :
+                print("Not enough Water, please contact a staff member so they can fill this upp.")
 
-        else:
-            water -= lateeWater
-            milk -= lateemilk
-            coffee -= lateeCoffee
-            print("Enjoy your Latee")
-            print(water,milk,coffee)
+            elif lateemilk > milk:
+                print("Not enough Milk, please contact a staff member so they can fill this upp.")
+
+            elif lateeCoffee > coffee:
+                print("Not enough Coffee, please contact a staff member so they can fill this upp.")
+
+            else:
+                water -= lateeWater
+                milk -= lateemilk
+                coffee -= lateeCoffee
+                print("Enjoy your Latee")
+        
+        else :
+            print("Please insert inough coins")
             
     elif userChoice == "CAPPUCCINO" or userChoice == "C":
         
-        if cappuccinoWater > water :
-            print("Not enough Water, please contact a staff member so they can fill this upp.")
+        userQuarters = int(input("Enter the number of quarters : "))
+        userDimes = int(input("Enter the number of dimes : "))
+        userNickles = int(input("Enter the number of nickles : "))
+        userPennies = int(input("Enter the number of pennies : "))
         
-        elif cappuccinomilk > milk:
-            print("Not enough Milk, please contact a staff member so they can fill this upp.")
-    
-        elif cappuccinoCoffee > coffee:
-            print("Not enough Coffee, please contact a staff member so they can fill this upp.")
+        canGetCoffee, change = coinWnder(userQuarters, userDimes, userNickles, userPennies, cappuccinoCost)
+        
+        if canGetCoffee:
+            
+            print("Here is your change $" + str(change) )
+        
+            if cappuccinoWater > water :
+                print("Not enough Water, please contact a staff member so they can fill this upp.")
 
-        else:
-            water -= cappuccinoWater
-            milk -= cappuccinomilk
-            coffee -= cappuccinoCoffee
-            print("Enjoy your Cappuccino")
-            print(water,milk,coffee)
+            elif cappuccinomilk > milk:
+                print("Not enough Milk, please contact a staff member so they can fill this upp.")
+
+            elif cappuccinoCoffee > coffee:
+                print("Not enough Coffee, please contact a staff member so they can fill this upp.")
+
+            else:
+                water -= cappuccinoWater
+                milk -= cappuccinomilk
+                coffee -= cappuccinoCoffee
+                print("Enjoy your Cappuccino")
+        else :
+            print("Please insert inough coins")
             
     elif userChoice == "REPORT":
         
@@ -141,3 +192,5 @@ while mashineRunning :
     else:
         
         print("please enter a valid input.")
+        
+print("print program ended!")
